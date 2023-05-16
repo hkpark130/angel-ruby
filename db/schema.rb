@@ -15,11 +15,18 @@ ActiveRecord::Schema.define(version: 2023_05_16_182628) do
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "title"
+    t.text "body"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "firstName"
+    t.string "lastName"
+    t.string "email"
+    t.string "password"
+    t.string "country"
   end
 
 end
