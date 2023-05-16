@@ -3,4 +3,12 @@ class Api::V1::ContentsController < ApplicationController
         @contents = Post.all
         render json: @contents
     end
+
+    protect_from_forgery
+    def post
+        post = Post.new
+        post.title = params[:title]
+        post.body = params[:body]
+        post.save
+    end
 end
