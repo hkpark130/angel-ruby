@@ -55,3 +55,10 @@ docker-compose run web bundle install
 docker-compose build
 docker-compose up
 docker-compose run web rails db:create
+=========================
+docker-compose run web rails g controller api/v1/users
+docker-compose run web rails g controller api/v1/auth
+docker-compose run web rails g controller api/v1/contents
+docker-compose run web rails g model Post
+docker-compose run web rails g model User
+docker-compose run web rake db:migrate
