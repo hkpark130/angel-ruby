@@ -62,8 +62,6 @@ docker-compose run web rails g controller api/v1/auth
 docker-compose run web rails g controller api/v1/contents
 docker-compose run web rails g model Post
 docker-compose run web rails g model User
-docker-compose run web rake db:test:prepare
 docker-compose run web rails db:drop
 docker-compose run web rails db:create
 docker-compose run web rails db:migrate
-docker-compose run web rails db:migrate:status
