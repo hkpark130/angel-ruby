@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2023_05_16_182628) do
     t.datetime "updated_at", null: false
     t.text "title"
     t.text "body"
+    t.string "writer"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

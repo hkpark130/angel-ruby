@@ -1,5 +1,6 @@
 class Api::V1::ContentsController < ApplicationController
     before_action :authorize_request, only: [:get, :post, :delete, :put]
+    before_action :authorization_check, only: [:delete, :put]
 
     def get
         @contents = Post.all
@@ -11,6 +12,7 @@ class Api::V1::ContentsController < ApplicationController
         post = Post.new
         post.title = params[:title]
         post.body = params[:body]
+        post.writer = @current_user_id
         post.save
     end
 
@@ -47,10 +49,17 @@ class Api::V1::ContentsController < ApplicationController
 
     def authorize_request
         header = request.headers['Authorization']
-        token = header&.split(' ')&.last # Bearer {토큰}
-    
-        unless token && JwtService.decode(token)
+        token = header&.split(' ')&.last
+
+        unless token && (decoded_token = JwtService.decode(token))
             render json: { error: 'Unauthorized' }, status: :unauthorized
+            return
         end
+
+        @current_user_id = decoded_token['user_id']
+    end
+
+    def authorization_check
+        render json: { error: @current_user_id }, status: :unauthorized
     end
 end
