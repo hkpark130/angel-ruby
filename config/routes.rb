@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'content', to: 'contents#get'
       post 'contents', to: 'contents#post'
       delete 'contents/:id', to: 'contents#delete'
+      put 'contents/:id', to: 'contents#put'
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
