@@ -1,5 +1,5 @@
 class Api::V1::ContentsController < ApplicationController
-    before_action :authorize_request, only: [:get, :post, :destroy, :put]
+    before_action :authorize_request, only: [:get, :post, :delete, :put]
 
     def get
         @contents = Post.all
