@@ -1,6 +1,5 @@
 class Api::V1::ContentsController < ApplicationController
     before_action :authorize_request, only: [:get, :post, :delete, :put]
-    before_action :authorization_check, only: [:delete, :put]
 
     def get
         @contents = Post.all
@@ -19,6 +18,10 @@ class Api::V1::ContentsController < ApplicationController
     protect_from_forgery
     def delete
         post = Post.find(params[:id])
+        unless post.writer.to_i == @current_user_id
+            render json: { error: 'Authorization failed' }, status: :unauthorized
+            return
+        end
         post.destroy
         response = {
             message: "Deleted"
@@ -29,6 +32,10 @@ class Api::V1::ContentsController < ApplicationController
     protect_from_forgery
     def put
         post = Post.find(params[:id])
+        unless post.writer.to_i == @current_user_id
+            render json: { error: 'Authorization failed' }, status: :unauthorized
+            return
+        end
         post.title = params[:title]
         post.body = params[:body]
         post.save
@@ -57,9 +64,5 @@ class Api::V1::ContentsController < ApplicationController
         end
 
         @current_user_id = decoded_token['user_id']
-    end
-
-    def authorization_check
-        render json: { error: @current_user_id }, status: :unauthorized
     end
 end
