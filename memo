@@ -56,6 +56,7 @@ docker-compose build
 docker-compose up
 docker-compose run web rails db:create
 =========================
+docker-compose run web gem install jwt
 docker-compose run web rails g controller api/v1/users
 docker-compose run web rails g controller api/v1/auth
 docker-compose run web rails g controller api/v1/contents
