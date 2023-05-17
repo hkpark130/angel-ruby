@@ -11,4 +11,14 @@ class Api::V1::ContentsController < ApplicationController
         post.body = params[:body]
         post.save
     end
+
+    protect_from_forgery
+    def delete
+        post = Post.find(params[:id])
+        post.destroy
+        response = {
+            message: "Deleted"
+        }
+        render json: response
+    end
 end
