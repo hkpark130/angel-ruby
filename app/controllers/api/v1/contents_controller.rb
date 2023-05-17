@@ -1,4 +1,6 @@
 class Api::V1::ContentsController < ApplicationController
+    before_action :authorize_request, only: [:get, :post, :destroy, :put]
+
     def get
         @contents = Post.all
         render json: @contents
@@ -41,5 +43,14 @@ class Api::V1::ContentsController < ApplicationController
             }
         }
         render json: response
+    end
+
+    def authorize_request
+        header = request.headers['Authorization']
+        token = header&.split(' ')&.last # Bearer {토큰}
+    
+        unless token && JwtService.decode(token)
+            render json: { error: 'Unauthorized' }, status: :unauthorized
+        end
     end
 end
